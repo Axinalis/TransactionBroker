@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - logicalFilePath: db.changelog-master.yaml
+  - changeSet:
+      id: 2
+      author: axinalis
+      labels: "CreateTransactionsTable"
+      comment: "Create table with transactions"
+      changes:
+        - createTable:
+            tableName: Transactions
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: bank
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: client-id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order-type
+                  type: varchar(15)
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: price
+                  type: double
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: created-at
+                  type: date
+                  constraints:
+                    - nullable: false
+              - column:
+                  name: total-cost
+                  type: double
+                  constraints:
+                    - nullable: false

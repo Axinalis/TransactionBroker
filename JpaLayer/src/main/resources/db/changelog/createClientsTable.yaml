@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - logicalFilePath: db.changelog-master.yaml
+  - changeSet:
+      id: 1
+      author: axinalis
+      labels: "CreateClientsTable"
+      comment: "Create table with list of clients"
+      changes:
+        - createTable:
+            tableName: Clients
+            columns:
+              - column:
+                  name: client-id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
