@@ -2,6 +2,8 @@ version: '2'
 services:
   jpa-layer:
     build: ./JpaLayer/
+    depends_on:
+      - database
     ports:
       - "8002:8002"
     environment:
@@ -9,6 +11,7 @@ services:
       DATASOURCE_URL: "jdbc:postgresql://database:5432/transaction-broker"
       DB_USERNAME: "username"
       DB_PASSWORD: "password"
+      KAFKA_BROKER: "kafka:9092"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest

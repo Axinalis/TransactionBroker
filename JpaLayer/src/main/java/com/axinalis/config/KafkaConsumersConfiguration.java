@@ -1,10 +1,13 @@
 package com.axinalis.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -15,9 +18,11 @@ import java.util.Map;
 import static org.springframework.kafka.support.KafkaHeaders.GROUP_ID;
 
 @Configuration
+@EnableKafka
 public class KafkaConsumersConfiguration {
 
-    private String KAFKA_BROKER = "localhost:29092";
+    @Value("${kafka.broker}")
+    private String KAFKA_BROKER;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory(){
