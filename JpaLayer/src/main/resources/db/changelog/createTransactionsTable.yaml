@@ -7,7 +7,7 @@ databaseChangeLog:
       comment: "Create table with transactions"
       changes:
         - createTable:
-            tableName: Transactions
+            tableName: transactions
             columns:
               - column:
                   name: id
@@ -22,12 +22,12 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: client-id
+                  name: client_id
                   type: int
                   constraints:
                     nullable: false
               - column:
-                  name: order-type
+                  name: order_type
                   type: varchar(15)
                   constraints:
                     - nullable: false
@@ -42,12 +42,12 @@ databaseChangeLog:
                   constraints:
                     - nullable: false
               - column:
-                  name: created-at
+                  name: created_at
                   type: date
                   constraints:
                     - nullable: false
               - column:
-                  name: total-cost
+                  name: total_cost
                   type: double
                   constraints:
                     - nullable: false

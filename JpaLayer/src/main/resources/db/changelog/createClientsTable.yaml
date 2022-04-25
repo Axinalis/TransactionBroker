@@ -7,10 +7,10 @@ databaseChangeLog:
       comment: "Create table with list of clients"
       changes:
         - createTable:
-            tableName: Clients
+            tableName: clients
             columns:
               - column:
-                  name: client-id
+                  name: client_id
                   type: int
                   autoIncrement: true
                   constraints:
