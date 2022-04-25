@@ -3,8 +3,8 @@ package com.axinalis.consumer;
 import com.axinalis.entity.TransactionEntity;
 import com.axinalis.model.Transaction;
 import com.axinalis.repository.TransactionRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -22,8 +22,8 @@ public class TransactionsConsumer {
     }
 
     @KafkaListener(topics = "transactions")
-    public void listen(ConsumerRecord<?, ?> message){
-        Transaction transactionModel = mapper.convertValue(message.value(), Transaction.class);
+    public void listen(String message) throws JsonProcessingException {
+        Transaction transactionModel = mapper.readValue(message, Transaction.class);
         TransactionEntity transactionToDb = new TransactionEntity();
 
         transactionToDb.setBank(transactionModel.getBank());

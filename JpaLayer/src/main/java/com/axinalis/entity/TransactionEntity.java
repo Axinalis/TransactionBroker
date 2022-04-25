@@ -1,13 +1,11 @@
 package com.axinalis.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Transactions")
+@Table(name = "transactions")
 public class TransactionEntity {
 
     private Long id;
@@ -20,6 +18,7 @@ public class TransactionEntity {
     private double totalCost;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

@@ -1,18 +1,17 @@
 package com.axinalis.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Clients")
+@Table(name = "clients")
 public class ClientEntity {
 
     private Long clientId;
     private String email;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getClientId() {
         return clientId;
     }
