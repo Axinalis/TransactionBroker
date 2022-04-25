@@ -12,6 +12,17 @@ services:
       DB_USERNAME: "username"
       DB_PASSWORD: "password"
       KAFKA_BROKER: "kafka:9092"
+      GROUP_ID: "kafka_group_id-1"
+
+  user-api:
+    build: ./UserInterfaceLayer/
+    ports:
+      - "8003:8003"
+    environment:
+      CREATE_USER_TOPIC: "clients"
+      TRANSACTIONS_TOPIC: "transactions"
+      KAFKA_BROKER: "kafka:9092"
+      GROUP_ID: "kafka_group_id-2"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
