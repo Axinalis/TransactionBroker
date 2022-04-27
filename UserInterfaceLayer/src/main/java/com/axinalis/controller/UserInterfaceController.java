@@ -48,9 +48,8 @@ public class UserInterfaceController {
     }
 
     @PostMapping("/user/{id}/message")
-    public void produce(@RequestBody String message) throws JsonProcessingException {
-        Transaction buffer = mapper.readValue(message, Transaction.class);
-        String stringMessage = mapper.writeValueAsString(buffer);
+    public void produce(@RequestBody Transaction message) throws JsonProcessingException {
+        String stringMessage = mapper.writeValueAsString(message);
         template.send(transactionsTopic, stringMessage);
     }
 
