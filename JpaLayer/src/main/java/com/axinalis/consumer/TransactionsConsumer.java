@@ -1,9 +1,11 @@
 package com.axinalis.consumer;
 
-import com.axinalis.entity.TransactionEntity;
+import com.axinalis.dao.TransactionDao;
 import com.axinalis.model.Transaction;
-import com.axinalis.repository.TransactionRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -11,28 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class TransactionsConsumer {
 
-    private TransactionRepository repository;
+    private Logger log = LoggerFactory.getLogger(TransactionsConsumer.class);
+    private TransactionDao dao;
     private ObjectMapper mapper;
 
-    public TransactionsConsumer(@Autowired TransactionRepository repository,
+    public TransactionsConsumer(@Autowired TransactionDao dao,
                                 @Autowired ObjectMapper mapper) {
-        this.repository = repository;
+        this.dao = dao;
         this.mapper = mapper;
     }
 
-    @KafkaListener(topics = "transactions")
-    public void listen(Transaction message) {
-        TransactionEntity transactionToDb = new TransactionEntity();
+    @KafkaListener(topics = "${topic.transaction}")
+    public void listen(String transaction) throws JsonProcessingException {
+        Transaction message = mapper.readValue(transaction, Transaction.class);
+        log.info("A request for creating new transaction. ClientId: {}, Bank: {}, OrderType: {}",
+                message.getClientId(), message.getBank(), message.getOrderType().toString());
 
-        transactionToDb.setBank(message.getBank());
-        transactionToDb.setClientId(message.getClientId());
-        transactionToDb.setOrderType(message.getOrderType().toString());
-        transactionToDb.setCreatedAt(message.getCreatedAt());
-        transactionToDb.setQuantity(message.getQuantity());
-        transactionToDb.setPrice(message.getPrice());
-        transactionToDb.setTotalCost(message.getPrice() * message.getQuantity());
-
-        repository.save(transactionToDb);
+        dao.createTransaction(message);
     }
 
 }

@@ -1,20 +1,21 @@
 package com.axinalis.consumer;
 
 import com.axinalis.model.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
 public class ClientsConsumer {
 
-    private Logger logger = Logger.getAnonymousLogger();
+    private Logger log = LoggerFactory.getLogger(ClientsConsumer.class);
 
     @KafkaListener(topics = "${CREATE_USER_TOPIC}", groupId = "${GROUP_ID}")
     public void listen(String message){
-        logger.info(message);
+        log.info("Message for user is {}", message);
     }
 
     public List<Client> getUsers(){

@@ -1,8 +1,6 @@
 package com.axinalis.controller;
 
 import com.axinalis.consumer.ClientsConsumer;
-import com.axinalis.consumer.TransactionsConsumer;
-import com.axinalis.model.Client;
 import com.axinalis.model.Transaction;
 import com.axinalis.model.TransactionType;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,14 +13,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -34,8 +28,6 @@ public class UserInterfaceControllerTest {
     private KafkaTemplate<String, String> template;
     @MockBean
     private ClientsConsumer cConsumer;
-    @MockBean
-    private TransactionsConsumer tConsumer;
     @Autowired
     private ObjectMapper mapper;
 
@@ -93,15 +85,6 @@ public class UserInterfaceControllerTest {
                         "    \"createdAt\" : \"2022-04-23T17:29:15.483050\"\n" +
                         "}"))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    public void getMessagesTest() throws Exception {
-        given(this.tConsumer.getMessages()).willReturn(new ArrayList<Transaction>());
-
-        mockMvc.perform(get("/kafka/user/1/message"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray());
     }
 
     @Test
