@@ -13,7 +13,7 @@ public class ClientsConsumer {
 
     private Logger log = LoggerFactory.getLogger(ClientsConsumer.class);
 
-    @KafkaListener(topics = "${CREATE_USER_TOPIC}", groupId = "${GROUP_ID}")
+    @KafkaListener(topics = "${RESPONSE_TOPIC}", groupId = "${GROUP_ID}")
     public void listen(String message){
         log.info("Message for user is {}", message);
     }

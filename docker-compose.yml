@@ -20,6 +20,7 @@ services:
       - "8082:8082"
     environment:
       CREATE_USER_TOPIC: "clients"
+      RESPONSE_TOPIC: "messageForClient"
       TRANSACTIONS_TOPIC: "transactions"
       KAFKA_BROKER: "kafka:9092"
       GROUP_ID: "kafka_group_id"
