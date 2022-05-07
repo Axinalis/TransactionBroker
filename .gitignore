@@ -25,3 +25,4 @@ hs_err_pid*
 .idea
 /JpaLayer/target
 /UserInterfaceLayer/target
+*.iml
